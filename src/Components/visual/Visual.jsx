@@ -17,9 +17,11 @@ import {
   YAxis,
 } from "recharts";
 import { CChart } from "@coreui/react-chartjs";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Visual = () => {
   const url = "https://data.covid19india.org/data.json";
+  const [isLoading, setIsLoading] = useState(true);
   const [covidData, setCovidData] = useState([]);
   const [stateName, setStateName] = useState("Gujarat");
 
@@ -29,11 +31,13 @@ const Visual = () => {
 
   useEffect(() => {
     try {
+      setIsLoading(true);
       const fetchData = async () => {
         const res = await axios.get(url);
         const data = await res.data;
         console.log(data);
         setCovidData(data.statewise);
+        setIsLoading(false);
       };
       fetchData();
     } catch (error) {
@@ -97,167 +101,173 @@ const Visual = () => {
         gap: [1, 2],
       }}
     >
-      {/* searchbar component */}
-      <Box sx={{ flex: 0 }}>
-        <SelectComp
-          covidData={covidData}
-          handleStateChange={handleStateChange}
-          stateName={stateName}
-        />
-      </Box>
-
-      <Box
-        sx={{
-          flex: 1,
-          display: "flex",
-          //   flexWrap: "wrap",
-          flexDirection: ["column", "column", "row"],
-          gap: 1,
-          height: "auto",
-        }}
-      >
-        <Box
-          component="div"
-          sx={{
-            flex: 1,
-            display: "flex",
-            height: "auto",
-            maxWidth: ["100%", "100%", "350px"],
-            flexDirection: "column",
-            gap: 2,
-            p: 2,
-            backgroundColor: "#d2eaff",
-            alignItems: "center",
-          }}
-        >
-          <Box
-            component="div"
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-              gap: 0.3,
-              height: "auto",
-              width: "100%",
-              alignItems: ["center", "flex-start"],
-            }}
-          >
-            {covidData.length > 0 && displayCovidData()}
-          </Box>
-          <Box
-            sx={{
-              flexGrow: 0,
-              backgroundColor: "white",
-              maxWidth: "300px",
-              width: "100%",
-              p: 2,
-            }}
-          >
-            <CChart
-              type="doughnut"
-              borderAlign="center"
-              data={{
-                labels: pieLables
-                  ? [pieLables[0][0], pieLables[1][0], pieLables[2][0]]
-                  : null,
-                datasets: [
-                  {
-                    data: pieLables
-                      ? [pieLables[0][1], pieLables[1][1], pieLables[2][1]]
-                      : null,
-                    backgroundColor: [
-                      "#FF6384",
-                      "#4BC0C0",
-                      "#FFCE56",
-                      "#E7E9ED",
-                      "#36A2EB",
-                    ],
-                  },
-                ],
-              }}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: {
-                    position: "bottom",
-                  },
-                },
-              }}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {/* searchbar component */}
+          <Box sx={{ flex: 0 }}>
+            <SelectComp
+              covidData={covidData}
+              handleStateChange={handleStateChange}
+              stateName={stateName}
             />
           </Box>
-        </Box>
-        <Box
-          sx={{
-            flex: 2,
-            backgroundColor: "whitesmoke",
-            display: "flex",
-            flexDirection: "column",
-            gap: 1,
-          }}
-        >
-          <Box
-            component="div"
-            sx={{
-              display: "flex",
-              width: "100%",
-              flex: 1,
-              flexWrap: "wrap",
 
-              padding: 1,
-              alignItems: "center",
-              justifyContent: "space-around",
-              gap: 2,
-            }}
-          >
-            {covidData.length > 0 && displayCovidInfoCards()}
-          </Box>
           <Box
-            component="div"
             sx={{
+              flex: 1,
               display: "flex",
-              flexDirection: "row",
-              width: "100%",
-              flex: 3,
-              justifyContent: "center",
-              alignItems: "center",
-              p: 2,
+              //   flexWrap: "wrap",
+              flexDirection: ["column", "column", "row"],
+              gap: 1,
+              height: "auto",
             }}
           >
             <Box
+              component="div"
               sx={{
                 flex: 1,
-                backgroundColor: "white",
+                display: "flex",
+                height: "auto",
+                maxWidth: ["100%", "100%", "350px"],
+                flexDirection: "column",
+                gap: 2,
                 p: 2,
+                backgroundColor: "#d2eaff",
+                alignItems: "center",
               }}
             >
-              <ResponsiveContainer aspect={2.5} width="100%" height="100%">
-                <BarChart
-                  width={400}
-                  height={300}
-                  data={bar_label_data ? bar_label_data : []}
-                  barSize={20}
+              <Box
+                component="div"
+                sx={{
+                  flexGrow: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  gap: 0.3,
+                  height: "auto",
+                  width: "100%",
+                  alignItems: ["center", "flex-start"],
+                }}
+              >
+                {covidData.length > 0 && displayCovidData()}
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 0,
+                  backgroundColor: "white",
+                  maxWidth: "300px",
+                  width: "100%",
+                  p: 2,
+                }}
+              >
+                <CChart
+                  type="doughnut"
+                  borderAlign="center"
+                  data={{
+                    labels: pieLables
+                      ? [pieLables[0][0], pieLables[1][0], pieLables[2][0]]
+                      : null,
+                    datasets: [
+                      {
+                        data: pieLables
+                          ? [pieLables[0][1], pieLables[1][1], pieLables[2][1]]
+                          : null,
+                        backgroundColor: [
+                          "#FF6384",
+                          "#4BC0C0",
+                          "#FFCE56",
+                          "#E7E9ED",
+                          "#36A2EB",
+                        ],
+                      },
+                    ],
+                  }}
+                  options={{
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: "bottom",
+                      },
+                    },
+                  }}
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                flex: 2,
+                backgroundColor: "whitesmoke",
+                display: "flex",
+                flexDirection: "column",
+                gap: 1,
+              }}
+            >
+              <Box
+                component="div"
+                sx={{
+                  display: "flex",
+                  width: "100%",
+                  flex: 1,
+                  flexWrap: "wrap",
+
+                  padding: 1,
+                  alignItems: "center",
+                  justifyContent: "space-around",
+                  gap: 2,
+                }}
+              >
+                {covidData.length > 0 && displayCovidInfoCards()}
+              </Box>
+              <Box
+                component="div"
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "100%",
+                  flex: 3,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  p: 2,
+                }}
+              >
+                <Box
+                  sx={{
+                    flex: 1,
+                    backgroundColor: "white",
+                    p: 2,
+                  }}
                 >
-                  <XAxis
-                    dataKey="state"
-                    scale="point"
-                    padding={{ left: 10, right: 10 }}
-                  />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <Bar
-                    dataKey="cases"
-                    fill="#8884d8"
-                    background={{ fill: "#eee" }}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+                  <ResponsiveContainer aspect={2.5} width="100%" height="100%">
+                    <BarChart
+                      width={400}
+                      height={300}
+                      data={bar_label_data ? bar_label_data : []}
+                      barSize={20}
+                    >
+                      <XAxis
+                        dataKey="state"
+                        scale="point"
+                        padding={{ left: 10, right: 10 }}
+                      />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <Bar
+                        dataKey="cases"
+                        fill="#8884d8"
+                        background={{ fill: "#eee" }}
+                      />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </Box>
+              </Box>
             </Box>
           </Box>
-        </Box>
-      </Box>
+        </>
+      )}
     </Box>
   );
 };

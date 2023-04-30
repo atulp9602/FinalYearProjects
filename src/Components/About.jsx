@@ -67,7 +67,7 @@ const About = () => {
           >
             React js is most demanded front end library based javascript. It
             works on resusable components. It also help to make responsive app
-            with ingegrating other front end libraries like Mui, Bootstrap etc..
+            with integrating other front end libraries like Mui, Bootstrap etc..
             Here, some practice app and demo apps are available to showcase of
             mine work.
           </Typography>

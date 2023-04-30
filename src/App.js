@@ -1,5 +1,6 @@
 import "./App.css";
 import "./style/HookStyle.css";
+import "./style/spinnerStyle.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
