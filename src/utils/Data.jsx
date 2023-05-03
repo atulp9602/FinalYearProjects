@@ -74,6 +74,12 @@ const ProjectsData = [
         img_path: "covid_dahboard.png",
         src_path: "/Projects/Visual"
     },
+    {
+        title: "Student Registration Form",
+        desc: "This is custom registration form add fields dynamically as per user input. ",
+        img_path: "studentRegistraion.png",
+        src_path: "/Projects/StudentTask"
+    },
 
 ]
 
