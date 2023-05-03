@@ -58,7 +58,10 @@ const StudentDetail = (props) => {
           : {studentData.roll}
         </Typography>
       </Card>
-      <Card sx={{ flex: 2 }}>
+      <Typography variant="h6" textAlign="center" mt={4} p={2} fontWeight={700}>
+        Previous Grade Records
+      </Typography>
+      <Card sx={{ flex: 2, maxWidth: 800, width: "100%", mx: "auto" }}>
         <Table striped bordered hover size="sm" responsive="sm">
           <thead>
             <tr>
