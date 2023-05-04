@@ -193,7 +193,7 @@ const StudentTask = () => {
                       const { name, value } = event.target;
                       const numOfGrades = parseInt(value);
                       const newGrades =
-                        numOfGrades === 1
+                        numOfGrades === 1 || numOfGrades === 0
                           ? []
                           : Array(numOfGrades - 1).fill({
                               percent: "",
@@ -224,8 +224,7 @@ const StudentTask = () => {
               <FieldArray name="prevGrades">
                 {(props) => (
                   <>
-                    {values.grade &&
-                      values.grade.length > 0 &&
+                    {values.prevGrades.length > 0 &&
                       values.prevGrades.map((_, index) => (
                         <Row key={index}>
                           <h3>Grade {index + 1}</h3>
@@ -238,7 +237,7 @@ const StudentTask = () => {
                             {console.log(index)}
                             <Form.Label>Enter Percent</Form.Label>
                             <Form.Control
-                              name={`prevGrades[${index}].percent`}
+                              name={`prevGrades.${index}.percent`}
                               value={values.prevGrades[index].percent}
                               onChange={handleChange}
                               onBlur={handleBlur}
@@ -263,7 +262,7 @@ const StudentTask = () => {
                           >
                             <Form.Label>Enter Remark</Form.Label>
                             <Form.Control
-                              name={`prevGrades[${index}].remark`}
+                              name={`prevGrades.${index}.remark`}
                               value={values.prevGrades[index].remark}
                               onChange={handleChange}
                               onBlur={handleBlur}
