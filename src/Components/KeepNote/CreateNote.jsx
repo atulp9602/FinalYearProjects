@@ -79,7 +79,6 @@ const CreateNote = ({ addNote, status, noteA, updateNoteIndex }) => {
           }}
           onChange={handleInput}
         />
-        <br />
         <textarea
           rows="3"
           name="subtitle"
@@ -95,7 +94,6 @@ const CreateNote = ({ addNote, status, noteA, updateNoteIndex }) => {
           }}
           placeholder="Enter your notes here..."
         ></textarea>
-        <br />
 
         <Button
           variant="contained"

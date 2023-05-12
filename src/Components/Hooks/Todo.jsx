@@ -18,9 +18,11 @@ export default function Todo() {
 
   function handleRemove(id) {
     console.log("handle", id);
-    setTodoArr((prevArrData) => {
-      return prevArrData.filter((val, ind) => id !== ind);
-    });
+    let confirm = window.confirm("Are you sure to delete this todo?");
+    confirm &&
+      setTodoArr((prevArrData) => {
+        return prevArrData.filter((val, ind) => id !== ind);
+      });
   }
 
   return (

@@ -1,12 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.30cb46f1.css",
-    "main.js": "/static/js/main.615878d2.js",
+    "main.js": "/static/js/main.d06a99cf.js",
     "static/media/reactjsprojects.png": "/static/media/reactjsprojects.da18a18c407e3853010d.png",
     "static/media/react_logo.png": "/static/media/react_logo.81ed438b18e24116794d.png",
     "static/media/reactbg.png": "/static/media/reactbg.01aed3c5cb9fc3b9d634.png",
     "static/media/reactbg-2.png": "/static/media/reactbg-2.43093642f032c30471a6.png",
     "static/media/covid_dahboard.png": "/static/media/covid_dahboard.38b69f85ff53e648cab1.png",
+    "static/media/YupValidation.jpg": "/static/media/YupValidation.c514739fd47c87d76c22.jpg",
     "static/media/reactbg-3.png": "/static/media/reactbg-3.e4d90882ab9c4aeb594f.png",
     "static/media/covidtabular.png": "/static/media/covidtabular.988d14f9132079faaefa.png",
     "static/media/chat.png": "/static/media/chat.c26bd09375da22336b0d.png",
@@ -21,10 +22,10 @@
     "static/media/weather.webp": "/static/media/weather.6daff330ca7e57180331.webp",
     "index.html": "/index.html",
     "main.30cb46f1.css.map": "/static/css/main.30cb46f1.css.map",
-    "main.615878d2.js.map": "/static/js/main.615878d2.js.map"
+    "main.d06a99cf.js.map": "/static/js/main.d06a99cf.js.map"
   },
   "entrypoints": [
     "static/css/main.30cb46f1.css",
-    "static/js/main.615878d2.js"
+    "static/js/main.d06a99cf.js"
   ]
 }

@@ -18,9 +18,10 @@ import Inc_Dec from "./DesignDemos/IncDec";
 import ImageSearch from "./DesignDemos/ImageSearch";
 import WeatherCard from "./weatherapp/WeatherCard";
 import Visual from "./visual/Visual";
-import StudentTask from "./StudentTask/StudentTask";
-import StudentDetail from "./StudentTask/StudentDetail";
-
+import StudentTask from "./FormikYupValidation/StudentTask";
+import StudentDetail from "./FormikYupValidation/StudentDetail";
+import YupValidation from "./FormikYupValidation/YupValidation";
+import PreviewForm from "./FormikYupValidation/PreviewForm";
 const Routers = () => {
   return (
     <Routes>
@@ -42,6 +43,8 @@ const Routers = () => {
       <Route path="/Projects/Visual" Component={Visual} />
       <Route path="/Projects/StudentTask" Component={StudentTask} />
       <Route path="/Projects/StudentDetail" Component={StudentDetail} />
+      <Route path="/Projects/YupValidation" Component={YupValidation} />
+      <Route path="/Projects/PreviewForm" Component={PreviewForm} />
       <Route path="/Contact" Component={Contact} />
       <Route
         path="/*"
