@@ -62,7 +62,13 @@ const StudentDetail = (props) => {
         Previous Grade Records
       </Typography>
       <Card sx={{ flex: 2 }} elevation={4}>
-        <Table striped bordered hover responsive="sm" style={{ maxWidth: 800, width: "100%", margin: " 5px auto" }}>
+        <Table
+          striped
+          bordered
+          hover
+          responsive="sm"
+          style={{ maxWidth: 800, width: "100%", margin: " 5px auto" }}
+        >
           <thead>
             <tr>
               <th>#</th>

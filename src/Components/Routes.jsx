@@ -18,10 +18,11 @@ import Inc_Dec from "./DesignDemos/IncDec";
 import ImageSearch from "./DesignDemos/ImageSearch";
 import WeatherCard from "./weatherapp/WeatherCard";
 import Visual from "./visual/Visual";
-import StudentTask from "./FormikYupValidation/StudentTask";
-import StudentDetail from "./FormikYupValidation/StudentDetail";
 import YupValidation from "./FormikYupValidation/YupValidation";
 import PreviewForm from "./FormikYupValidation/PreviewForm";
+import StudentDetail from "./FormikYupValidation/StudentDetail";
+import StudentTask from "./FormikYupValidation/StudentTask";
+
 const Routers = () => {
   return (
     <Routes>

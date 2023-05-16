@@ -119,7 +119,7 @@ const Visual = () => {
               flex: 1,
               display: "flex",
               //   flexWrap: "wrap",
-              flexDirection: ["column", "column", "row"],
+              flexDirection: ["column-reverse", "column-reverse", "row"],
               gap: 1,
               height: "auto",
             }}

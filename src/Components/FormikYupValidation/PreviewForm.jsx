@@ -6,9 +6,10 @@ import AvtarComp from "../AvtarComp";
 const PreviewForm = () => {
   const { state } = useLocation();
   const { profileData, imgData } = state;
+  console.log("image src", imgData);
 
   return (
-    <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+    <Box sx={{ flex: 0 }}>
       <Box sx={{ flex: 0, p: 2 }}>
         <Typography variant="h4" textAlign="center">
           Profile
@@ -18,7 +19,8 @@ const PreviewForm = () => {
         sx={{
           flex: 1,
           display: "flex",
-          justifyContent: "center",
+          flexDirection: "column",
+          justify: "center",
           alignItems: "center",
         }}
       >
@@ -26,23 +28,21 @@ const PreviewForm = () => {
           className="shadow"
           sx={{
             p: 3,
-            height: 450,
-            width: 350,
+            maxWidth: 400,
+            display: "flex",
+            flexDirection: "column",
+            gap: 1,
           }}
         >
           <AvtarComp file={imgData} />
-          <CardContent
-            sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-          >
-            <Typography variant="h6">Name : {profileData.name}</Typography>
-            <Typography variant="h6">Age : {profileData.age}</Typography>
-            <Typography variant="h6">
-              Pancard Number : {profileData.panNumber || "NAN"}
-            </Typography>
-            <Typography variant="h6">
-              Votingcard Number : {profileData.voteNumber || "NAN"}
-            </Typography>
-          </CardContent>
+          <Typography variant="h6">Name : {profileData.name}</Typography>
+          <Typography variant="h6">Age : {profileData.age}</Typography>
+          <Typography variant="h6">
+            Pancard Number : {profileData.panNumber || "NAN"}
+          </Typography>
+          <Typography variant="h6">
+            Votingcard Number : {profileData.voteNumber || "NAN"}
+          </Typography>
         </Card>
       </Box>
     </Box>

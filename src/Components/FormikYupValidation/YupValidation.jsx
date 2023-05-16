@@ -1,31 +1,30 @@
 import { Box, Typography } from "@mui/material";
 import { Formik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Col, Form, FormGroup, Row } from "react-bootstrap";
-import { Avatar } from "@mui/material";
-import AvtarComp from "../AvtarComp";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
+import AvtarComp from "../AvtarComp";
 
 const YupValidation = () => {
-  const [file, setFile] = useState([]);
   const VotePanRef = useRef(null);
   const fileRef = useRef(null);
   const navigate = useNavigate();
 
   //Validation schema
-  const exampleValidation = Yup.object().shape({
+  const profileValidation = Yup.object().shape({
     name: Yup.string().required("Please, Enter Your Name !!"),
     age: Yup.number()
       .required("Please, Enter your age !!")
       .typeError("It must be Number !!"),
     file: Yup.mixed()
       .nullable()
-      .required("You need to provide a file")
       .test(
         "fileSize",
         "This file is too large",
-        (file) => !file || (file && file.size <= 1024 * 1024)
+        (file) =>
+          //1kb = 1024bytes //1mb = 1024kb
+          !file || (file && file.size <= 1024 * 1024)
       )
       .test(
         "fileType",
@@ -43,7 +42,7 @@ const YupValidation = () => {
             message: "Invalid Pan Number !!",
           }),
     }),
-    voteNumber: Yup.number().when("age", {
+    voteNumber: Yup.string().when("age", {
       is: (age) => age >= 18,
       then: () =>
         Yup.string()
@@ -66,12 +65,13 @@ const YupValidation = () => {
             voteNumber: "",
             panNumber: "",
           }}
-          onSubmit={(values) =>
+          onSubmit={(values) => {
             navigate("/Projects/PreviewForm", {
               state: { profileData: values, imgData: values.file },
-            })
-          }
-          validationSchema={exampleValidation}
+            });
+            console.log(values.file);
+          }}
+          validationSchema={profileValidation}
         >
           {({
             handleSubmit,
@@ -82,22 +82,25 @@ const YupValidation = () => {
             values,
             setFieldValue,
             isSubmitting,
+            handleReset,
           }) => (
             <Form
-              className="p-4 border border-dark-subtle"
+              className="container border border-dark-subtle bg-light p-3"
               onSubmit={handleSubmit}
+              onReset={handleReset}
+              noValidate
             >
               {/* //image  */}
               <Row className="mx-auto">
+                <Box>{<AvtarComp file={values.file} />}</Box>
+
                 <Form.Group
                   as={Col}
                   controlId="formFileSm"
-                  className="mb-3 mx-auto col-md-3"
+                  md="3"
+                  className="mb-3 mx-auto"
                 >
-                  <Box>{<AvtarComp file={values.file} />}</Box>
-
                   <Form.Control
-                    ref={fileRef}
                     type="file"
                     size="sm"
                     name="file"
@@ -114,15 +117,16 @@ const YupValidation = () => {
               </Row>
 
               <Row className="mx-auto">
-                <FormGroup
+                <Form.Group
                   as={Col}
-                  className="mb-2 mx-auto"
+                  className="mb-3 mx-auto"
                   md="4"
                   controlId="formName"
                 >
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     name="name"
+                    value={values.name}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     isInvalid={touched.name && errors.name}
@@ -131,17 +135,18 @@ const YupValidation = () => {
                   <Form.Control.Feedback type="invalid">
                     {errors.name}
                   </Form.Control.Feedback>
-                </FormGroup>
+                </Form.Group>
 
-                <FormGroup
+                <Form.Group
                   as={Col}
-                  className="mb-2 mx-auto"
+                  className="mb-3 mx-auto"
                   md="4"
                   controlId="formAge"
                 >
                   <Form.Label>Age</Form.Label>
                   <Form.Control
                     name="age"
+                    value={values.age}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     isInvalid={touched.age && errors.age}
@@ -150,13 +155,13 @@ const YupValidation = () => {
                   <Form.Control.Feedback type="invalid">
                     {errors.age}
                   </Form.Control.Feedback>
-                </FormGroup>
+                </Form.Group>
               </Row>
 
               <Row className="mx-auto">
-                <FormGroup
+                <Form.Group
                   as={Col}
-                  className="mb-2 mx-auto"
+                  className="mb-3 mx-auto"
                   md="4"
                   controlId="formVotingNumber"
                 >
@@ -164,6 +169,7 @@ const YupValidation = () => {
                   <Form.Control
                     ref={VotePanRef}
                     name="voteNumber"
+                    value={values.voteNumber}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     isInvalid={touched.voteNumber && errors.voteNumber}
@@ -173,16 +179,17 @@ const YupValidation = () => {
                   <Form.Control.Feedback type="invalid">
                     {errors.voteNumber}
                   </Form.Control.Feedback>
-                </FormGroup>
-                <FormGroup
+                </Form.Group>
+                <Form.Group
                   as={Col}
-                  className="mb-2 mx-auto"
+                  className="mb-3 mx-auto"
                   md="4"
                   controlId="formPanNumber"
                 >
                   <Form.Label>Pan Card Number</Form.Label>
                   <Form.Control
                     name="panNumber"
+                    value={values.panNumber}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     isInvalid={touched.panNumber && errors.panNumber}
@@ -192,11 +199,18 @@ const YupValidation = () => {
                   <Form.Control.Feedback type="invalid">
                     {errors.panNumber}
                   </Form.Control.Feedback>
-                </FormGroup>
+                </Form.Group>
               </Row>
-              <Row className="mx-auto">
-                <Button type="submit" className="col-6 col-md-3 mx-auto my-4">
+              <Row className="justify-content-center mx-2">
+                <Button
+                  variant="success"
+                  type="submit"
+                  className=" col-md-3 m-2"
+                >
                   Submit form
+                </Button>
+                <Button type="reset" className=" col-md-3 m-2">
+                  Reset form
                 </Button>
               </Row>
             </Form>

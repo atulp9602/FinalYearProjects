@@ -8,9 +8,10 @@ import * as Yup from "yup";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import StudentDetail from "./StudentDetail";
+import { useFieldArray } from "react-hook-form";
 
 const StudentTask = () => {
-  //useNavigate hook
+  //useHistory hook
   const navigate = useNavigate();
 
   //Yup validation schema
@@ -19,8 +20,9 @@ const StudentTask = () => {
       .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, {
         message: "Invalid Email",
       })
-      .required("Please, Enter Your Email!!"),
+      .required("Please, Enter Your Email !!"),
     roll: Yup.number()
+      .typeError("It must be a number !!")
       .test(
         "len",
         "Roll number must be exactly 12 digits long",
@@ -28,7 +30,7 @@ const StudentTask = () => {
       )
       .required("Please, Enter Roll Number!!"),
     name: Yup.string().required("Please, Enter your Name !!"),
-    grade: Yup.string().required("Please, select grade"),
+    grade: Yup.string().required("Please, select grade !!"),
     prevGrades: Yup.array().of(
       Yup.object().shape({
         percent: Yup.number()
@@ -61,7 +63,7 @@ const StudentTask = () => {
     setShowToast(status);
   }
 
-  //function : onGradeChange
+  //onGradeChange
   function onChangeGrade(e, field, values, setValues) {
     // update dynamic form
     const prevGradesCopy = [...values.prevGrades];
@@ -81,8 +83,6 @@ const StudentTask = () => {
       }
     }
     setValues({ ...values, prevGrades: prevGradesCopy });
-
-    // call formik onChange method
     field.onChange(e);
   }
 
@@ -122,6 +122,7 @@ const StudentTask = () => {
           {({
             handleChange,
             handleSubmit,
+            handleReset,
             handleBlur,
             errors,
             values,
@@ -132,7 +133,7 @@ const StudentTask = () => {
             <Form
               className="container border bg-light p-3"
               onSubmit={handleSubmit}
-              isValidating
+              onReset={handleReset}
               noValidate
             >
               <Row>
@@ -319,12 +320,16 @@ const StudentTask = () => {
                   </>
                 )}
               />
-
-              {/* //updated code - for validation on onsubmit for first object  only */}
-
-              <Row>
-                <Button type="submit" className="col-md-3 mx-auto my-4">
+              <Row className="justify-content-center mx-2">
+                <Button
+                  variant="success"
+                  type="submit"
+                  className=" col-md-3 m-2"
+                >
                   Submit form
+                </Button>
+                <Button type="reset" className=" col-md-3 m-2">
+                  Reset form
                 </Button>
               </Row>
             </Form>
